@@ -1,66 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+========================================================================================
+=== LaravelCRUDBootstrap5 === Sail =====================================================
+----------------------------------------------------------------------------------------
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+0 === установка Composer с оф-сайта https://getcomposer.org/download/
 
-## About Laravel
+1 === подготовка
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+sudo apt update 
+sudo apt upgrade
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2 === переход в папку с проектом
+cd /home/aleksandr/projects/LaravelCRUDBootstrap5/
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3 === установка 
+composer create-project laravel/laravel laravel-crud
 
-## Learning Laravel
+4 === копируем все файлы с папки laravel-crud в .  (точка это текущая папка->/projects/LaravelCRUDBootstrap5/)
+	Опция -a означает архивный режим, сохраняя все атрибуты и рекурсивно копируя содержимое.
+rsync -a laravel-crud/ ./
+	рекурсивное сравнение 2-ух каталогов текущего и laravel-crud
+diff -r laravel-crud .
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5 === проверяем artisan
+php artisan
+	создать символическую ссылку для доступа к папке storage
+php artisan storage:link 
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3 === Sail - это пакет Laravel, который включает в себя сервер, базу данных и другие сервисы, используя Docker контейнеры
+composer require laravel/sail --dev
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+6 === Установка Sail в Laravel. Выбрать базу данных из списка mysql(по умолчанию)
+php artisan sail:install
 
-## Laravel Sponsors
+ ┌ Which services would you like to install? ───────────────────┐
+ │ › ◼ mysql                                                  ┃ │
+ │   ◻ pgsql                                                  │ │
+ │   ◻ mariadb      
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+7 === Редактируем файл .env для создания базы данных
+Заходим в редактор кода и редактируем строки 
+в файле .env путь в моем проекте /home/aleksandr/projects/LaravelCRUDBootstrap5/.env
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+APP_NAME="Laravel Store"
+...
+APP_URL=http://localhost
 
-## Contributing
+LOG_CHANNEL=daily
+...
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel_crud
+DB_USERNAME=root
+DB_PASSWORD=password
 
-## Code of Conduct
+обязательно DB_USERNAME=root !!! иначе нет прав доступа возможно еще sail будет работаь
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+8 === запуск alias убирает необходимость указывать полный путь к командам ./vendor/bin/sail
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+	
+9 === запуск контейнеров сервера базы данных
+sail up -d
+	проверка версии
+sail php --version
 
-## Security Vulnerabilities
++++ Другие команды (Полный список sail list-commands или sail help в командной строке)
+  sail up        запустить контейнеры без доступа к командной строке, нужно открывать другую вкладку терминала для ввода
+  sail up -d     запустить контейнеры с доступом к командной строке (в фоне)
+  sail stop      остановить контейнеры
+  !!! sail down  выгрузит с потерей данных по описанию (не проверял)
+  sail restart   перезапуск
+  sail ps        список запущенных контейнеров
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+10 === Если нет ключей то генерируем
+	!!! Все команды php artisan ... заменяются на sail artisan ...
+!!! sail artisan key:generate
 
-## License
+11 === линк для storage в sail
+sail artisan storage:link
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+стартовая страница http://localhost/
+
+12 === проверка для базы данных создалась подключилась если миграция успешна
+sail artisan migrate
+
+выбрать Yes
+   WARN  The database 'laravel_shop' does not exist on the 'mysql' connection.  
+
+ ┌ Would you like to create it? ────────────────────────────────┐
+ │ ● Yes / ○ No                                         
+ └──────────────────────────────────────────────────────────────┘
