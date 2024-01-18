@@ -1,6 +1,4 @@
-========================================================================================
-=== LaravelCRUDBootstrap5 === Sail =====================================================
-----------------------------------------------------------------------------------------
+## === LaravelCRUDBootstrap5 === Sail ===
 
 0 === установка Composer с оф-сайта https://getcomposer.org/download/
 
@@ -32,31 +30,26 @@ composer require laravel/sail --dev
 6 === Установка Sail в Laravel. Выбрать базу данных из списка mysql(по умолчанию)
 php artisan sail:install
 
- ┌ Which services would you like to install? ───────────────────┐
- │ › ◼ mysql                                                  ┃ │
- │   ◻ pgsql                                                  │ │
- │   ◻ mariadb      
-
+Which services would you like to install? 
+› ◼ mysql 
+◻ pgsql
+◻ mariadb      
 
 7 === Редактируем файл .env для создания базы данных
 Заходим в редактор кода и редактируем строки 
-в файле .env путь в моем проекте /home/aleksandr/projects/LaravelCRUDBootstrap5/.env
-
+в файле .env 
 APP_NAME="Laravel Store"
 ...
 APP_URL=http://localhost
 
 LOG_CHANNEL=daily
 ...
-
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=laravel_crud
 DB_USERNAME=root
 DB_PASSWORD=password
-
-обязательно DB_USERNAME=root !!! иначе нет прав доступа возможно еще sail будет работаь
 
 8 === запуск alias убирает необходимость указывать полный путь к командам ./vendor/bin/sail
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
@@ -86,9 +79,5 @@ sail artisan storage:link
 12 === проверка для базы данных создалась подключилась если миграция успешна
 sail artisan migrate
 
-выбрать Yes
-   WARN  The database 'laravel_shop' does not exist on the 'mysql' connection.  
-
- ┌ Would you like to create it? ────────────────────────────────┐
- │ ● Yes / ○ No                                         
- └──────────────────────────────────────────────────────────────┘
+Would you like to create it?
+● Yes / ○ No
