@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         User::create($request->only(['name', 'email']));
         return redirect()->route('users.index')
-        ->withSuccess('Created user: '.$request->name.' Email: '.$request->email);
+            ->withSuccess('Created user: ' . $request->name . ' Email: ' . $request->email);
     }
 
     /**
@@ -59,8 +59,8 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $user->update($request->only(['name','email']));
-        return redirect()->route('users.index')->withSuccess('Updated user'.$user->name);
+        $user->update($request->only(['name', 'email']));
+        return redirect()->route('users.index')->withSuccess('Updated user' . $user->name);
         // dd($request->all());
     }
 
@@ -69,8 +69,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        
+
         $user->delete();
-        return redirect()->route('users.index')->withDanger('Delete user'.$user->name);
+        return redirect()->route('users.index')->withDanger('Delete user' . $user->name);
     }
 }
